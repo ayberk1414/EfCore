@@ -1,0 +1,105 @@
+﻿@model List<Category>
+<h1>Kategoriler</h1>
+<img src=" images/unnamed.png" alt="Kategoriler Resim">
+
+<a asp-action="CreateCategory">Yeni Kategori Ekle</a>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Kategori Adı</th>
+            <th>Açıklama</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Category item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.categoryName</td>
+                <td>@item.Description</td>
+                <td>
+                    <a asp-action="UpdateCategory" asp-route-id="@item.ID">Güncelle</a>
+                </td>
+                <td>
+                    <a class="button delete-link" data-id="@item.ID" href="#">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        color: #428bca;
+        text-align: center;
+    }
+
+    table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    a.button {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: #428bca;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    img {
+        display: block;
+        margin: 30px auto;
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<script>
+    //bunu netten aldım javascript bilmiyorum
+    // Sayfa yüklendiğinde çalışacak kod bloğu
+    document.addEventListener("DOMContentLoaded", function () {
+        // "Sil" bağlantılarına tıklama olayını yakalayalım
+        document.querySelectorAll(".delete-link").forEach(link => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault(); // Bağlantıya tıklama olayını iptal edelim
+
+                const categoryId = this.getAttribute("data-id");
+                const confirmation = confirm("Kategoriyi silmek istediğinize emin misiniz?");
+
+                if (confirmation) {
+                    // "DELETE" isteği yapmak için bir Fetch işlemi kullanalım
+                    fetch(`/Category/DeleteCategory?id=${categoryId}`, {
+                        method: "DELETE"
+                    }).then(response => {
+                        // Silme işlemi başarılı olduğunda sayfayı yenileyelim
+                        if (response.ok) {
+                            location.reload();
+                        }
+                    }).catch(error => {
+                        console.error("Silme işlemi başarısız oldu.", error);
+                    });
+                }
+            });
+        });
+    });
+</script>

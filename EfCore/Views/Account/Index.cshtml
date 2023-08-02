@@ -1,0 +1,29 @@
+﻿
+
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout=null;
+}
+<div style="text-align:center">
+<h1 style="color: cadetblue; text-align: center;">Giriş Yap</h1>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+<form method="post" asp-action="Login" style="text-align:center">
+    <div class="form-group">
+        <label for="username">Kullanıcı Adı:</label>
+        <input type="text" class="form-control" id="username" name="username" />
+    </div>
+    <div class="form-group">
+        <label for="password">Şifre:</label>
+        <input type="password" class="form-control" id="password" name="password" />
+    </div>
+    <div class="form-group">
+            <button type="submit" class="btn btn-primary" asp-controller="Category" asp-action="GetCategories">Giriş Yap</button>
+    </div>
+</form>
+</div>
