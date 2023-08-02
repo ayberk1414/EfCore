@@ -9,6 +9,6 @@ app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Category}/{action=GetCategories}");
+    pattern: "{controller=Account}/{action=Index}");
 
 app.Run();
